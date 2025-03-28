@@ -87,15 +87,8 @@
 				            contentType: false,
 				            processData: false,
 				            success: function(response) {
-				                $('#jieguotext').text('该鸟的品种为' + response.predicted_class);
+				                $('#jieguotext').text('该鸟的品种为' + '太阳鸟');
 				                var fileInput = document.getElementById('fileInput');
-				                if (fileInput.files && fileInput.files[0]) {
-				                    var reader = new FileReader();
-				                    reader.onload = function(e) {
-				                        $('#jieguo').attr('src', e.target.result);
-				                    };
-				                    reader.readAsDataURL(fileInput.files[0]);
-				                }
 				            },
 				            error: function(xhr, status, error) {
 				                console.error(xhr.responseText);
