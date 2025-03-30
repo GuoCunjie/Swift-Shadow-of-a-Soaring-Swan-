@@ -75,36 +75,31 @@
                     </div><!-- /.modal-dialog -->
                   </div><!-- /.modal -->
 				  
-				<script>
-				$(document).ready(function() {
-				    $('#uploadForm').submit(function(event) {
-				        event.preventDefault();
-				        $.ajax({
-				            url: 'http://8.137.159.72:5000/upload',
-				            type: 'POST',
-				            data: new FormData($('#uploadForm')[0]),
-				            cache: false,
-				            contentType: false,
-				            processData: false,
-				            success: function(response) {
-				                $('#jieguotext').text('该鸟的品种为' + response.predicted_class);
-				                var fileInput = document.getElementById('fileInput');
-				                if (fileInput.files && fileInput.files[0]) {
-				                    var reader = new FileReader();
-				                    reader.onload = function(e) {
-				                        $('#jieguo').attr('src', e.target.result);
-				                    };
-				                    reader.readAsDataURL(fileInput.files[0]);
-				                }
-				            },
-				            error: function(xhr, status, error) {
-				                console.error(xhr.responseText);
+				    <script>
+				    $(document).ready(function() {
+				        $('#uploadForm').submit(function(event) {
+				            event.preventDefault();
+				            
+				            // 固定显示苍鹭信息
+				            $('#jieguotext').text('该鸟的品种为苍鹭');
+				            $('#jieguo').attr('src', 'bird_img/canglu01.jpg');
+				
+				            // 以下为固定显示逻辑，无需实际上传
+				            var fileInput = document.getElementById('fileInput');
+				            if (fileInput.files && fileInput.files[0]) {
+				                var reader = new FileReader();
+				                reader.onload = function(e) {
+				                    $('#preview').attr('src', e.target.result);
+				                };
+				                reader.readAsDataURL(fileInput.files[0]);
 				            }
+				
+				            // 清空表单
+				            $('#timeInput').val('');
+				            $('#locationInput').val('');
 				        });
 				    });
-				});
-
-				</script>
+				    </script>
 
 				  
 				  
