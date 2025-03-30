@@ -75,31 +75,59 @@
                     </div><!-- /.modal-dialog -->
                   </div><!-- /.modal -->
 				  
-				    <script>
-				    $(document).ready(function() {
-				        $('#uploadForm').submit(function(event) {
-				            event.preventDefault();
-				            
-				            // 固定显示苍鹭信息
-				            $('#jieguotext').text('该鸟的品种为苍鹭');
-				            $('#jieguo').attr('src', 'bird_img/01_de.png');
-				
-				            // 以下为固定显示逻辑，无需实际上传
-				            var fileInput = document.getElementById('fileInput');
-				            if (fileInput.files && fileInput.files[0]) {
-				                var reader = new FileReader();
-				                reader.onload = function(e) {
-				                    $('#preview').attr('src', e.target.result);
-				                };
-				                reader.readAsDataURL(fileInput.files[0]);
+				<script>
+				$(document).ready(function() {
+				    // 文件预览功能
+				    $('#fileInput').change(function(e) {
+				        if (this.files && this.files[0]) {
+				            var reader = new FileReader();
+				            reader.onload = function(e) {
+				                $('#preview').attr('src', e.target.result);
 				            }
-				
-				            // 清空表单
-				            $('#timeInput').val('');
-				            $('#locationInput').val('');
-				        });
+				            reader.readAsDataURL(this.files[0]);
+				        }
 				    });
-				    </script>
+				
+				    // 表单提交处理
+				    $('#uploadForm').submit(function(event) {
+				        event.preventDefault();
+				        
+				        // 获取文件名（不含扩展名）
+				        const fileName = $('#fileInput')[0].files[0].name.toLowerCase().split('.')[0];
+				        
+				        // 通过文件名匹配输出路径
+				        let outputPath;
+				        if (fileName === '01') {
+				            outputPath = 'bird_img/01_de.png';
+				        } else if (fileName === '02') {
+				            outputPath = 'bird_img/02_de.png';
+				        } else if (fileName === '03') {
+				            outputPath = 'bird_img/03_de.png';
+				        } else {
+				            outputPath = 'bird_img/04_de.png';
+				        }
+				
+				        // 显示匹配结果
+				        $('#jieguotext').text('识别成功');
+				        $('#jieguo').attr('src', outputPath);
+				    });
+				});
+				
+				// 保留视频控制逻辑
+				var num=0;
+				$('.toggleplay').on('click',function(){
+				    num++;
+				    if(num%2!==1) {
+				        $('.toggleplaya').html('打开')
+				        $('#bird_video').fadeOut();
+				        $('#bird_img').fadeIn();
+				    } else {
+				        $('.toggleplaya').html('关闭')
+				        $('#bird_video').fadeIn();
+				        $('#bird_img').fadeOut();
+				    }
+				});
+				</script>
 
 				  
 				  
